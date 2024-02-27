@@ -41,7 +41,7 @@ void Motor::fwd(int speed)
 {
    digitalWrite(In1, HIGH);
    digitalWrite(In2, LOW);
-   ledcWrite(Channel, speed);
+  //  ledcWrite(Channel, speed);
 
 }
 
@@ -49,14 +49,14 @@ void Motor::rev(int speed)
 {
    digitalWrite(In1, LOW);
    digitalWrite(In2, HIGH);
-   ledcWrite(Channel, speed);
+  //  ledcWrite(Channel, speed);
 }
 
 void Motor::brake()
 {
    digitalWrite(In1, HIGH);
    digitalWrite(In2, HIGH);
-   ledcWrite(Channel, 0);
+  //  ledcWrite(Channel, 0);
 }
 
 void Motor::standby()

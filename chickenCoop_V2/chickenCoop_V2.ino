@@ -11,8 +11,9 @@
 #include <ESPAsyncWebServer.h> //https://github.com/me-no-dev/ESPAsyncWebServer
 // depends on: https://github.com/me-no-dev/AsyncTCP
 #include <WebSocketsServer.h> // https://github.com/Links2004/arduinoWebSockets/
-#include <SPIFFS.h>
-#include <HTTPClient.h>
+#include "FS.h"
+#include "LittleFS.h"
+#include <ESP8266HTTPClient.h>
 #include "time.h" // https://randomnerdtutorials.com/esp32-date-time-ntp-client-server-arduino/
 #include "ArduinoJson.h"
 
@@ -136,8 +137,8 @@ void setup() {
   message.reserve(50);
 //  pinMode(EMERGENCY_STOP, INPUT);
   
-  if (!SPIFFS.begin()) {
-//    Serial.println("error occured while mounting SPIFFS");
+  if (!LittleFS.begin()) {
+//    Serial.println("error occured while mounting LittleFS");
     return;
   }
 
@@ -150,10 +151,10 @@ void setup() {
 
   // loading page and assets
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, "/index.html", "text/html", false);
+    request->send(LittleFS, "/index.html", "text/html", false);
   });
   server.on("/script.js", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, "/script.js", "text/javascript");
+    request->send(LittleFS, "/script.js", "text/javascript");
   });
   
   server.begin();
