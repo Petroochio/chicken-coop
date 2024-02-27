@@ -64,8 +64,9 @@ void updateLocalTime() {
 
 void getSunTimes() {
   // https://www.dfrobot.com/blog-917.html
+  WiFiClient client;
   HTTPClient http;
-  http.begin(sunRiseSetAPI);
+  http.begin(client, sunRiseSetAPI);
   int httpCode = http.GET();
   if (httpCode > 0) {
     String payload = http.getString();

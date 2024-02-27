@@ -91,8 +91,9 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
    src: https://github.com/arduino-libraries/ArduinoHttpClient/blob/master/src/HttpClient.cpp
 */
 int postToGoogle(String data) {
+  WiFiClient client;
   HTTPClient http;
-  http.begin(googleScript);
+  http.begin(client, googleScript);
   http.addHeader(F("Content-Type"), F("text/plain"), true);
   int httpResponseCode = http.POST(data);
   http.end();

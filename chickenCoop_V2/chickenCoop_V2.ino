@@ -14,6 +14,7 @@
 #include "FS.h"
 #include "LittleFS.h"
 #include <ESP8266HTTPClient.h>
+#include <WiFiClient.h>
 #include "time.h" // https://randomnerdtutorials.com/esp32-date-time-ntp-client-server-arduino/
 #include "ArduinoJson.h"
 
