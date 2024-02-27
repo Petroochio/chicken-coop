@@ -132,20 +132,21 @@ WebSocketsServer webSocket(WSport);
 
 void setup() {
 //  Serial.println(millis());
-//  Serial.begin(115200);
+ Serial.begin(115200);
   pinMode(MANUAL_UP, INPUT_PULLUP);
   pinMode(MANUAL_DOWN, INPUT_PULLUP);
   message.reserve(50);
 //  pinMode(EMERGENCY_STOP, INPUT);
   
   if (!LittleFS.begin()) {
-//    Serial.println("error occured while mounting LittleFS");
+   Serial.println("error occured while mounting LittleFS");
     return;
   }
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     currentTime = millis()/1000;
+    yield();
   }
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
