@@ -7,7 +7,7 @@
  */
 
 #include <ESP8266WiFi.h>
-#include "TB6612_ESP32.h" // https://github.com/pablopeza/TB6612FNG_ESP32
+#include "TB6612_ESP8266.h" // modded https://github.com/pablopeza/TB6612FNG_ESP32
 #include <ESPAsyncWebServer.h> //https://github.com/me-no-dev/ESPAsyncWebServer
 // depends on: https://github.com/me-no-dev/AsyncTCP
 #include <WebSocketsServer.h> // https://github.com/Links2004/arduinoWebSockets/
@@ -25,9 +25,9 @@
 #define AIN2 D6
 #define PWMA D5
 #define STBY D8
-#define OFFSET_A 1 // Value can be 1 or -1
-#define MANUAL_UP 19    // GPIO for manual motor control
-#define MANUAL_DOWN 23  // 2 pins, one for each dir
+// #define OFFSET_A 1 // Value can be 1 or -1
+// #define MANUAL_UP 19    // GPIO for manual motor control
+// #define MANUAL_DOWN 23  // 2 pins, one for each dir
 //#define EMERGENCY_STOP 36 // red button on breadboard, emergency stop
 #define OPEN_DR 255
 #define CLOSE_DR -255   // motor.drive() vals for open/close
@@ -85,7 +85,7 @@ unsigned int prevTime; // when the hour was last checked
 unsigned int updateInterval;
 
 // motor state machine
-Motor motor = Motor(AIN1, AIN2, PWMA, OFFSET_A, STBY, 5000, 8, 1);
+Motor motor = Motor(AIN1, AIN2, PWMA, STBY);
 uint8_t motorTime; // how many seconds the motor has been running
 unsigned int motorStartTime; // when the motor was started
 unsigned int motorInterval;
@@ -133,8 +133,8 @@ WebSocketsServer webSocket(WSport);
 void setup() {
 //  Serial.println(millis());
  Serial.begin(115200);
-  pinMode(MANUAL_UP, INPUT_PULLUP);
-  pinMode(MANUAL_DOWN, INPUT_PULLUP);
+  // pinMode(MANUAL_UP, INPUT_PULLUP);
+  // pinMode(MANUAL_DOWN, INPUT_PULLUP);
   message.reserve(50);
 //  pinMode(EMERGENCY_STOP, INPUT);
   
@@ -221,14 +221,14 @@ void loop() {
       broadcastChange('d');
     }
   } else { // manual motor controls - physical buttons
-    if (digitalRead(MANUAL_UP) && digitalRead(MANUAL_DOWN)) {
-      // no manual commands
-      stopDoor();
-    } else if ((!digitalRead(MANUAL_UP)) && digitalRead(MANUAL_DOWN)) {
-      openDoor();
-    } else if (digitalRead(MANUAL_UP) && (!digitalRead(MANUAL_DOWN))) {
-      closeDoor();
-    }
+    // if (digitalRead(MANUAL_UP) && digitalRead(MANUAL_DOWN)) {
+    //   // no manual commands
+    //   stopDoor();
+    // } else if ((!digitalRead(MANUAL_UP)) && digitalRead(MANUAL_DOWN)) {
+    //   openDoor();
+    // } else if (digitalRead(MANUAL_UP) && (!digitalRead(MANUAL_DOWN))) {
+    //   closeDoor();
+    // }
   }
 }
 

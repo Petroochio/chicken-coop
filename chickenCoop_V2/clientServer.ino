@@ -94,7 +94,7 @@ int postToGoogle(String data) {
   WiFiClient client;
   HTTPClient http;
   http.begin(client, googleScript);
-  http.addHeader(F("Content-Type"), F("text/plain"), true);
+  http.addHeader(F("Content-Type"), F("text/plain"));
   int httpResponseCode = http.POST(data);
   http.end();
   return httpResponseCode;
